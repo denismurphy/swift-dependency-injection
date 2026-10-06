@@ -1,20 +1,31 @@
-// swift-tools-version:5.7
-
+// swift-tools-version: 6.2
 import PackageDescription
 
 let package = Package(
     name: "DependencyInjection",
-    platforms: [.iOS(.v13),.tvOS(.v13),.watchOS(.v6),.macOS(.v11)],
+    platforms: [.iOS(.v26), .macOS(.v26)],
     products: [
-        .library(
-            name: "DependencyInjection",
-            targets: ["DependencyInjection"]),
+        .library(name: "DependencyInjection", targets: ["DependencyInjection"]),
+        .library(name: "DependencyInjectionSwiftUI", targets: ["DependencyInjectionSwiftUI"]),
     ],
-    dependencies: [],
     targets: [
+        // Container, assemblies, @Inject. Foundation and Synchronization only.
         .target(
             name: "DependencyInjection",
-            dependencies: [])
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+        ),
+
+        // Environment-based container for SwiftUI view hierarchies.
+        .target(
+            name: "DependencyInjectionSwiftUI",
+            dependencies: ["DependencyInjection"],
+            swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
+        ),
+
+        .testTarget(
+            name: "DependencyInjectionTests",
+            dependencies: ["DependencyInjection", "DependencyInjectionSwiftUI"]
+        ),
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v6]
 )
