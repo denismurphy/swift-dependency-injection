@@ -45,7 +45,6 @@ public struct Register: Sendable {
     /// Registers a `@MainActor` factory. The registration must then be
     /// resolved on the main thread; resolving it elsewhere traps with a
     /// message from the runtime's isolation check.
-    @MainActor
     public static func mainActor<T: Sendable>(
         _ type: T.Type = T.self,
         name: String? = nil,

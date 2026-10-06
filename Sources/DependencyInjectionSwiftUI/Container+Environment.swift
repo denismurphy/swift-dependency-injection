@@ -18,7 +18,6 @@ extension View {
 ///
 /// `Inject` reads a task-local binding, which a view body is never inside, so
 /// views use this wrapper to honour `.container(_:)`.
-@MainActor
 @propertyWrapper
 public struct Dependency<Value: Sendable>: DynamicProperty {
     @Environment(\.container) private var container
